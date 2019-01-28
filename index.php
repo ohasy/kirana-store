@@ -1,5 +1,5 @@
 <?php include_once 'helpers/helper.php'; ?>
-
+<?php include_once 'services/category-services.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,9 +24,37 @@
 	<section id="content">
 		<!-- content begins -->
 
+		<?php
 
-		<!-- content ends -->
-	</section>
+
+			// $cates = getAllCategories();
+			// foreach ($cates as &$category) {
+			// 	echo($category);
+			// }
+
+		// $dude = addNewCategory("New product name");
+		// if($dude) {
+		// 	echo "records addedsuccessfully";
+		// }else {
+		// 	echo "adding record failed";
+		// }
+
+		$dude = updateCategory(10,"edited name");
+		if($dude){
+			echo "records edited successfully";
+		} else {
+			echo "editing failed";
+		}
+
+		// $dude = deleteCategory(9);
+		// if($dude){
+		// 	echo "records deleted successfully";
+		// } else {
+		// 	echo "deleting failed";
+		// }
+		  ?>
+		<!-- content ends --> 
+
   
   <?php subview('footer.php'); ?> 
 

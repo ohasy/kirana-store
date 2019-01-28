@@ -1,6 +1,6 @@
 <?php
 // connect to database
-$con = mysqli_connect('host', 'user', 'password', 'db_name');
+$con = mysqli_connect('localhost', 'root', '', 'apnadb'); //host,user,pass,db_name
 // check for connection errors
 if(mysqli_connect_errno())
 	die(mysqli_connect_error());
