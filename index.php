@@ -1,6 +1,4 @@
-<?php include_once 'helpers/helper.php'; ?>
-<?php include_once 'services/category-services.php'; ?>
-<?php include_once 'services/product-services.php'; ?>
+<?php include_once 'helpers/init.php' ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,15 +27,15 @@
 
 		// -----------------------------------------------
 
+		header("Location:"."views/auth-views/register.php");
 
-		// $dude = addProduct(10,"another product name","Product description");
-		// if($dude) {
+		// if(addProduct(10,"another product name","Product description")) {
 		// 	echo "proudct added successfully";
 		// }else {
 		// 	echo "adding proudct failed";
 		// }
 
-		getProductsByCategory(10);
+		// getProductsByCategory(10);
 
 		// ------------------------------------------------
 

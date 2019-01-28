@@ -6,8 +6,12 @@
   // hash the password. 
   // store the details and hashed password in db.
   // role id: 1 : user, 2: vendorer. 3: admin
-  
+
   function registerUser() {
+    echo "register user function called";
+    $username = "";
+    $email    = "";
+    $errors = array(); 
 
   }
 
