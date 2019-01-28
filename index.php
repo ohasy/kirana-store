@@ -1,5 +1,6 @@
 <?php include_once 'helpers/helper.php'; ?>
 <?php include_once 'services/category-services.php'; ?>
+<?php include_once 'services/product-services.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,25 +27,38 @@
 
 		<?php
 
+		// -----------------------------------------------
 
-			// $cates = getAllCategories();
+
+		// $dude = addProduct(10,"another product name","Product description");
+		// if($dude) {
+		// 	echo "proudct added successfully";
+		// }else {
+		// 	echo "adding proudct failed";
+		// }
+
+		getProductsByCategory(10);
+
+		// ------------------------------------------------
+
+			// $cates = getCategories();
 			// foreach ($cates as &$category) {
 			// 	echo($category);
 			// }
 
-		// $dude = addNewCategory("New product name");
+		// $dude = addCategory("New product name");
 		// if($dude) {
 		// 	echo "records addedsuccessfully";
 		// }else {
 		// 	echo "adding record failed";
 		// }
 
-		$dude = updateCategory(10,"edited name");
-		if($dude){
-			echo "records edited successfully";
-		} else {
-			echo "editing failed";
-		}
+		// $dude = updateCategory(10,"edited name");
+		// if($dude){
+		// 	echo "records edited successfully";
+		// } else {
+		// 	echo "editing failed";
+		// }
 
 		// $dude = deleteCategory(9);
 		// if($dude){

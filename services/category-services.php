@@ -3,27 +3,26 @@
  
   // get all categories
 
-  function getAllCategories():array {
-    echo(`<script>alert("what");</script>`);
+  function getCategories():array {
+
     $getCategoriesQuery = "SELECT `id`,`category_name` FROM `categories`";
     $result = mysqli_query($GLOBALS['con'], $getCategoriesQuery);
     // var_dump($result);
 
-    if(!$result) {
-      return array("message" => "No category found.");
-    } else {
-      echo`records found`;
+    if($result->num_rows) {
+
       $res_array = array();
-      while($row = mysqli_fetch_assoc($result)){
-        array_push($res_array,$row['category_name']);
+      while($row = mysqli_fetch_row($result)){
+        $res_array[] = $row;
       }
       return $res_array;
-    }
+    } 
+    return array("message" => "No category found.");
 
   }
   // add new category
   
-  function addNewCategory($cate_name):bool {
+  function addCategory($cate_name):bool {
 
     $insertCateQuery = "INSERT INTO `categories` (`category_name`) VALUES( ? )";
     $stmt = $GLOBALS['con']->prepare($insertCateQuery);
@@ -36,6 +35,8 @@
       return false;
     }
   }
+
+  // update category
 
   function updateCategory($category_id,$category_name):bool {
 
@@ -51,10 +52,11 @@
     }
   }
 
+  // delete category
 
   function deleteCategory($category_id):bool {
-    $updateCateQuery = "DELETE FROM `categories` WHERE `id` =? ";
-    $stmt = $GLOBALS['con']->prepare($updateCateQuery);
+    $deleteCateQuery = "DELETE FROM `categories` WHERE `id` = ? ";
+    $stmt = $GLOBALS['con']->prepare($deleteCateQuery);
     $stmt->bind_param("i",$category_id);
     $result = $stmt->execute();
     $stmt->close();
