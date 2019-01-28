@@ -1,5 +1,5 @@
 # kirana-store
-A poor CMS website in core php 
+A poor ecommerce website in core php 
 
 
 ## steps:
