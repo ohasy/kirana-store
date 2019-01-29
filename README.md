@@ -28,3 +28,10 @@ It will change again I am sure. so no point in documenting that right now.
 - make jwt token based rest api for login/sign up and everything else.
 - figure out a way to show good urls
 - use ajax calls somewhere in the app.
+
+
+## TABLE ALTERS COMMANDS:
+
+ ALTER TABLE `users` ADD `email` VARCHAR(256) NULL AFTER `username`;
+ ALTER TABLE `user_details` DROP `email`;
+ ALTER TABLE `user_details` ADD `dob` VARCHAR(256) NULL AFTER `contact_number`;

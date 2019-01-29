@@ -6,10 +6,18 @@
   <form method="post" action="register.php">
   	<?php include('errors.php'); ?>
   	<div class="input-group">
-  	  <label>Username</label>
-  	  <input type="text" name="username" value="<?php 'echo $username;' ?>">
+  	  <label>First Name</label>
+  	  <input type="text" name="fname" value="<?php 'echo $username;' ?>">
+  	</div>
+		<div class="input-group">
+  	  <label>Last Name</label>
+  	  <input type="text" name="lname" value="<?php 'echo $username;' ?>">
   	</div>
   	<div class="input-group">
+  	  <label>Username</label>
+  	  <input type="text" name="username" value="<?php 'echo $email;' ?>">
+  	</div>
+		<div class="input-group">
   	  <label>Email</label>
   	  <input type="email" name="email" value="<?php 'echo $email;' ?>">
   	</div>
@@ -31,7 +39,18 @@
 
   <?php 
   if(isset($_POST['reg_user'])){
-    registerUser();
+		$res = registerUser($_POST['fname'],$_POST['lname'],$_POST['email'],$_POST['username'],$_POST['password_1'],$_POST['password_2']);
+		// var_dump($res);
+		if (array_key_exists("errors", $res)){
+			foreach($res['errors'] as $err  ){
+				echo '<p>'.$err.'</p>';
+			}
+			// var_dump($res['errors']);
+		} else if(array_key_exists("success", $res)){
+			// var_dump($res['success']);
+		 header("Location:"."views/home.php");
+		}
+
   }
   
   ?>

@@ -241,6 +241,11 @@ ALTER TABLE `user_details`
 --
 ALTER TABLE `user_images`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+ ALTER TABLE `users` ADD `email` VARCHAR(256) NULL AFTER `username`;
+ ALTER TABLE `user_details` DROP `email`;
+ ALTER TABLE `user_details` ADD `dob` VARCHAR(256) NULL AFTER `contact_number`;
+ ALTER TABLE `users` CHANGE `role_id` `role_id` TINYINT(3) UNSIGNED NOT NULL DEFAULT '0' COMMENT '0 = user, 1 =admin , 2 = vendor';
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
