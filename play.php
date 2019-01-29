@@ -1,4 +1,4 @@
-<?php include_once '../../helpers/init.php' ?>
+<?php include_once 'helpers/init.php' ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,7 +20,7 @@
 
 	<section id="content">
 	
-    <form action="add-product.php" method="POST" enctype="multipart/form-data"> 
+    <form action="play.php" method="POST" enctype="multipart/form-data"> 
         <label>Product Name:
             <input type="text" name="product-name">
         </label>

@@ -6,7 +6,7 @@
   // hash the password. 
   // store the details and hashed password in db.
   // role id: 0 : user, 1: admin. 2: venderor
-
+  // save details in session
   function registerUser($_fname,$_lname,$_email,$_username,$_password1,$_password2):array {
     $errors = array(); 
     $fname = mysqli_real_escape_string($GLOBALS['con'],$_fname);
@@ -48,7 +48,7 @@
       $stmt->close();
       var_dump($result);
       if($result){
-
+        session_start();
         $_SESSION['username']= $username;
         $_SESSION['is_authenticated'] = true;
         $_SESSION['user_id'] = $insert_id;
@@ -70,10 +70,69 @@
   // get hashed password from db
   // verify password
   // then check if hash of the password is matched with store password.
-  // if so, store : f_name,l_name,username,role,username
+  // if so, store : id,f_name,l_name,username,role,username in session
 
-  function login(){
+  function loginUser(string $_username,string $pass_word)
+  {
 
+      $errors = array();
+      $username = mysqli_real_escape_string($GLOBALS['con'], $_username);
+      // $pass = mysqli_real_escape_string($GLOBALS['con'], $_password);
+      // echo('<br>pass'.$pass);
+      if (empty($username)) {
+          array_push($errors, "Username is required");
+      }
+      if (empty($pass_word)) {
+          array_push($errors, "Password is required");
+      }
+  
+      if (count($errors) == 0) {
+          // $password = password_hash($password);
+          $loginQuery = "SELECT `id`,`f_name`,`l_name`,`username`,`password`,`role_id` FROM `users` WHERE `username`=?";
+          $stmt = $GLOBALS['con']->prepare($loginQuery);
+
+          if($stmt) {
+
+                $stmt->bind_param("s", $username);
+                $stmt->execute();
+                $stmt->bind_result($user_id, $fname, $lname, $username, $password, $role);
+                $row =$stmt->fetch();
+                // echo $_password;
+                echo $user_id.' '.$fname.' '.$lname.' '.$username.' '.$pass_word.' '.$password.' '.$role; 
+                var_dump(password_verify($pass_word, $password));
+                if (!empty($row)) {
+                  
+                    if (password_verify($pass_word, $password)) {
+                        session_start();
+                        $_SESSION['username']= $username;
+                        $_SESSION['is_authenticated'] = true;
+                        $_SESSION['user_id'] = $user_id;
+                        $_SESSION['is_admin'] = false;
+                        $_SESSION['role'] = $role;
+
+                        echo 'user logged in';
+                        header('Location:../home.php');
+                        
+                    } else {
+                        echo 'hash nhi match ho rha login failed';
+                    }
+                } else {
+                  echo 'user does not exist';
+                }
+      
+                $stmt->close();  
+
+          } else {
+            $error = $GLOBALS['con']->errno . ' ' . $GLOBALS['con']->error;
+            echo $error;
+            
+          }
+
+        
+
+      } else {
+        var_dump($errors);
+      }
   }
 
 ?>

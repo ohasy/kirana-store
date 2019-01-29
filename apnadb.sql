@@ -246,6 +246,8 @@ ALTER TABLE `user_images`
  ALTER TABLE `user_details` DROP `email`;
  ALTER TABLE `user_details` ADD `dob` VARCHAR(256) NULL AFTER `contact_number`;
  ALTER TABLE `users` CHANGE `role_id` `role_id` TINYINT(3) UNSIGNED NOT NULL DEFAULT '0' COMMENT '0 = user, 1 =admin , 2 = vendor';
+ ALTER TABLE `users` CHANGE `password` `password` CHAR(60) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;
+ ALTER TABLE `products` ADD `product_image_id` INT NULL AFTER `product_desc`;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
