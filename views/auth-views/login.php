@@ -28,6 +28,9 @@
             <button type="submit" class="btn" name="login_user">Login</button>
         </div>
         <p>
+             <a href="forgot-password">Forgot credentials?</a>
+        </p>
+        <p>
             Not yet a member? <a href="register">Sign up</a>
         </p>
     </form>

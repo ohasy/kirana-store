@@ -46,7 +46,7 @@
       $result = $stmt->execute();
       $insert_id = $stmt->insert_id;
       $stmt->close();
-      var_dump($result);
+      // var_dump($result);
       if($result){
         session_start();
         $_SESSION['username']= $username;
@@ -133,6 +133,44 @@
       } else {
         var_dump($errors);
       }
+  }
+
+  // will get user_id :
+  // make an entry of reset token in pwd_reset_tokens table with user_id
+  // make a reset link containing this token
+  // mail it to user's email address 
+  function reqResetPassword($user_email){
+
+    $queryGetUsrId = "SELECT `id` FROM `users` WHERE `username`=? OR `email`=? ";
+    $stmt = $GLOBALS['con']->prepare($queryGetUsrId);
+    $stmt->bind_param("ss",$user_email,$user_email);
+    $stmt->execute();
+    $stmt->bind_result($user_id);
+    $row = $stmt->fetch();
+    $stmt->close();
+    if (!empty($row)) {
+        addResetToken($user_id);
+    } else {
+    echo 'user does not exist';
+    }
+  
+  }
+
+  function addResetToken($user_id){
+    echo "user_id".$user_id.gettype($user_id);
+    
+    $reset_token = "dummy_reset_token";
+    $queryInsertRstTkn = "INSERT INTO `pwd_reset_tokens` SET (`user_id`,'reset_token') VALUES(?,?)";
+    $stmt = $GLOBALS['con']->prepare($queryInsertRstTkn);
+    $stmt->bind_param("is",$user_id,$reset_token);
+    $result = $stmt->execute();
+    $insert_id = $stmt->insert_id;
+    $stmt->close();
+    if($result){
+      echo 'entry to ho gyi';
+    }else{
+      echo 'entry bhi nhi hui btao';
+    }
   }
 
 ?>

@@ -20,11 +20,13 @@ Another garib ecommerce website in core php. So, you have choosen php for your c
 
 It will change again I am sure. so no point in documenting that right now.
 
-## TODO:
+## TASKS:
 
 - project structure : decide what goes where -- DONE
 - make product and categories crud services -- DONE
-- login and register with pass hashes.
+- login and register with pass hashes. --DONE
+- send mails with zipped attachments through phpmailer --DONE
+- forget password functionality with password reset tokens --WORKING 
 - make jwt token based rest api for login/sign up and everything else.
 - figure out a way to show good urls
 - use ajax calls somewhere in the app.
@@ -32,6 +34,10 @@ It will change again I am sure. so no point in documenting that right now.
 
 ## TABLE ALTERS COMMANDS:
 
- ALTER TABLE `users` ADD `email` VARCHAR(256) NULL AFTER `username`;
- ALTER TABLE `user_details` DROP `email`;
- ALTER TABLE `user_details` ADD `dob` VARCHAR(256) NULL AFTER `contact_number`;
+
+
+// TODO:: FORGOT PASS LOGIC::
+// MAKE A BUTTON 'forgot password' in views/auth-views/login.php
+// send a mail to user's email address with a link to change  password
+// two pass fields which will reset the password
+// hash
