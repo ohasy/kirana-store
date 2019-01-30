@@ -21,15 +21,21 @@
 	<section id="content">
 	
     <form action="add-product.php" method="POST" enctype="multipart/form-data"> 
+        <div class="form-group">
         <label>Product Name:
             <input type="text" name="product-name">
         </label>
+        </div>
+        <div class="form-group">
         <label>Product Description:
             <input type="text" name="product-dec">
         </label>  
+        </div>
+        <div class=form-group>
         <label>Product Image:
-            <input type="file" name="product-image">
+            <input type="file" name="product-image" >
         </label>    
+        </div>
         <button type="submit" name="add-prod">Submit</button>
     </form>
   
@@ -43,14 +49,14 @@
 
 
 <?php 
+// accept="image/x-png,image/gif,image/jpeg"
     if(isset($_POST['add-prod'])){
-        $file = $_FILES['product-image'];
-        
-        var_dump($file);
-        $types = array('image/jpeg','image/jpg','image/png');
-        // if(in_array($file['type'],$types)){
-            move_uploaded_file($file['tmp_name'],'uploads/'.$file['name']);
-       // }
+        $result =  uploadFile('product-image');
+        if(array_key_exists('error',$result)){
+            echo($result['error']);
+        } else {
+            $fileName = $result['success'];
+        }
         
     }
 ?>
