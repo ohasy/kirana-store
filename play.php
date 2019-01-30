@@ -39,9 +39,11 @@ $recipients = array(
 
  $zip_name = createZip('helpers');
 
+ echo '<br>'.$zip_name;
  $attachments = array(
     $zip_name => 'helpers zip',
  );
+ var_dump($attachments);
 
 
  $result = sendMail("dummy subject","dummy body",$recipients,$attachments);

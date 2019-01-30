@@ -14,9 +14,6 @@ $mailer->Password = "wow@2018";
 $mailer->Subject =$subject;
 $mailer->Body = $body;
 $mailer->IsHTML(true);
-$mailer->AddAddress($to,"yash");
-
-
 
 foreach($recipients as $email => $name){
 $mailer->AddAddress($email,$name);
@@ -24,6 +21,7 @@ $mailer->AddAddress($email,$name);
 // $mailer->AddAddress('rahul@sharabhtechnologies.com','rahul');
 // $mailer->AddAddress("anuraj.7627@gmail.com","anuraj");
 if(isset($attachments) && count($attachments)>0) {
+    echo 'ye execute hua'.$attachments;
     foreach($attachments as $file_path => $file_name){
         $mailer->AddAttachment($file_path,$file_name);
         }
