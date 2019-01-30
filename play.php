@@ -1,4 +1,4 @@
-<?php include_once 'helpers/init.php' ?>
+<?php include_once '../helpers/init.php' ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,12 +37,13 @@ $recipients = array(
     'raviojha500@gmail.com' => 'Person Three'
  );
 
- $zip_name = createZip('helpers');
-
- echo '<br>'.$zip_name;
+ $zip = createZip('../helpers');
+ 
  $attachments = array(
-    $zip_name => 'helpers zip',
+    $zip['zip_path'] => $zip['zip_name'] ,
  );
+
+ 
  var_dump($attachments);
 
 

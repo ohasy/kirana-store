@@ -1,18 +1,18 @@
 <?php
 
-function createZip($folder_path):string {
+function createZip($folder_path):array {
 
     $zip_name = uniqid(rand()).'.zip';
-
+    $zip_path = 'uploads/'.$zip_name;
 
 $zip = new ZipArchive();
 
 // Get real path for our folder
-$rootPath = realpath('css');
+$rootPath = realpath($folder_path);
 
 // Initialize archive object
 $zip = new ZipArchive();
-$zip->open($zip_name, ZipArchive::CREATE | ZipArchive::OVERWRITE);
+$zip->open($zip_path, ZipArchive::CREATE | ZipArchive::OVERWRITE);
 
 // Create recursive directory iterator
 /** @var SplFileInfo[] $files */
@@ -28,9 +28,9 @@ foreach ($files as $name => $file)
     {
         // Get real and relative path for current file
         $filePath = $file->getRealPath();
-        echo("filepath".$filePath);
+       
         $relativePath = substr($filePath, strlen($rootPath) + 1);
-        echo("relativePath".$relativePath);
+      
         // Add current file to archive
         $zip->addFile($filePath, $relativePath);
         
@@ -40,6 +40,6 @@ foreach ($files as $name => $file)
 // Zip archive will be created only after closing object
 $zip->close();
 
-return $zip_name;
+return array('zip_name'=>$zip_name,'zip_path'=>$zip_path);
 }
 ?>
