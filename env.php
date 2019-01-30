@@ -1,8 +1,8 @@
 <?php
 $ENV = 'development';
 
-$_ENV['EMAIL_SENDER_ADDRESS'] = 'airbnbbikaner@gmail.com'; //FROM MAIL
-$_ENV['EMAIL_SENDER_PASS'] = 'wow@2018';
+$_ENV['EMAIL_SENDER_ADDRESS'] = 'yashojha55@gmail.com'; //FROM MAIL
+$_ENV['EMAIL_SENDER_PASS'] = 'phpmailer@123';
 
 if($ENV == 'development') {
 

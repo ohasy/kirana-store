@@ -1,4 +1,8 @@
+Options +FollowSymLinks
 RewriteEngine On
+
+RewriteCond %{SCRIPT_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^([^\.]+)$ $1.php [NC,L]
 RewriteRule ^([^\.]+)$ $1.html [NC,L]
+#RewriteRule ^users/(\d+)*$ ./profile.php?id=$1

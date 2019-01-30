@@ -1,7 +1,7 @@
 <?php 
 include_once __DIR__.'/../libs/class.phpmailer.php';
 
-function sendMail(string $subject,string $body,array $recipients,array $attachments = array() ):array{
+function sendMail(string $subject,string $body, $recipients,array $attachments = array() ):array{
     //from :
     $mailer = new PHPMailer();
 $mailer->IsSMTP();
@@ -14,25 +14,27 @@ $mailer->Password = $_ENV['EMAIL_SENDER_PASS'];
 $mailer->Subject =$subject;
 $mailer->Body = $body;
 $mailer->IsHTML(true);
+//when multiple emails
+if(gettype($recipients) == "array") {
 
-foreach($recipients as $email => $name){
-$mailer->AddAddress($email,$name);
+    foreach($recipients as $email){
+        $mailer->AddAddress($email);
+    }
+
+} else {
+    $mailer->AddAddress($recipients);
 }
-// $mailer->AddAddress('rahul@sharabhtechnologies.com','rahul');
-// $mailer->AddAddress("anuraj.7627@gmail.com","anuraj");
+
+
 if(isset($attachments) && count($attachments)>0) {
     echo 'ye execute hua'.$attachments;
     foreach($attachments as $file_path => $file_name){
         $mailer->AddAttachment($file_path,$file_name);
         }
 }
-else {
-    echo '<script>alert("fir bhi nhi aya");</script>';
-}
-// $mailer->AddAttachment('file.zip','libs.zip');
-// $mailer->AddAttachment('forgot.php','file.php');
-$mailer->From = 'airbnbbikaner@gmail.com';
-$mailer->FromName = 'puchi';
+
+$mailer->From = $_ENV['EMAIL_SENDER_ADDRESS'];
+$mailer->FromName = 'Kirana Store';
 
 
 if(!$mailer->Send()){

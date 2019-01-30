@@ -11,21 +11,22 @@
 <?php subview('header.php'); ?>
 
 <section id="main">
-    <div class="header">
+    <div class="container col-lg-6">
+    <div class="header text-center">
         <h2>Login</h2>
     </div>
     <form method="post" action="login.php">
-
-        <div class="input-group">
-            <label>Username</label>
-            <input type="text" name="username" >
+    
+        <div class="form-group">
+            <label>Username or email</label>
+            <input class="form-control" type="text" name="username" >
         </div>
-        <div class="input-group">
+        <div class="form-group">
             <label>Password</label>
-            <input type="password" name="password">
+            <input class="form-control" type="password" name="password">
         </div>
-        <div class="input-group">
-            <button type="submit" class="btn" name="login_user">Login</button>
+        <div class="form-group">
+            <button class="btn btn-primary" type="submit" class="btn" name="login_user">Login</button>
         </div>
         <p>
              <a href="forgot-password">Forgot credentials?</a>
@@ -34,6 +35,7 @@
             Not yet a member? <a href="register">Sign up</a>
         </p>
     </form>
+    </div>
 </section>
 <?php subview('footer.php'); ?> 
 </body>

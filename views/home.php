@@ -20,7 +20,7 @@
 
 	<section id="content">
 		<!-- content begins -->
-
+asd
   
   <?php subview('footer.php'); ?> 
 

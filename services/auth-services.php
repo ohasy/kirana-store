@@ -141,36 +141,58 @@
   // mail it to user's email address 
   function reqResetPassword($user_email){
 
-    $queryGetUsrId = "SELECT `id` FROM `users` WHERE `username`=? OR `email`=? ";
+    $queryGetUsrId = "SELECT `id`,`f_name`,`email` FROM `users` WHERE `username`=? OR `email`=? ";
     $stmt = $GLOBALS['con']->prepare($queryGetUsrId);
     $stmt->bind_param("ss",$user_email,$user_email);
     $stmt->execute();
-    $stmt->bind_result($user_id);
+    $stmt->bind_result($user_id,$fname,$email);
     $row = $stmt->fetch();
     $stmt->close();
     if (!empty($row)) {
-        addResetToken($user_id);
+        addResetToken($user_id,$fname,$email);
     } else {
     echo 'user does not exist';
     }
   
   }
 
-  function addResetToken($user_id){
-    echo "user_id".$user_id.gettype($user_id);
-    
-    $reset_token = "dummy_reset_token";
-    $queryInsertRstTkn = "INSERT INTO `pwd_reset_tokens` SET (`user_id`,'reset_token') VALUES(?,?)";
-    $stmt = $GLOBALS['con']->prepare($queryInsertRstTkn);
-    $stmt->bind_param("is",$user_id,$reset_token);
+  function addResetToken($user_id,$fname,$email){
+  
+    $reset_token_otp = mt_rand(100000, 999999);
+    $qryInsrtRstTkn = "INSERT INTO `pwd_reset_tokens` (`user_id`,`reset_token`) VALUES(?,?)";
+    $stmt = $GLOBALS['con']->prepare($qryInsrtRstTkn);
+    $stmt->bind_param("is",$user_id,$reset_token_otp);
     $result = $stmt->execute();
-    $insert_id = $stmt->insert_id;
-    $stmt->close();
-    if($result){
-      echo 'entry to ho gyi';
-    }else{
-      echo 'entry bhi nhi hui btao';
+
+    if($stmt) {
+
+      $insert_id = $stmt->insert_id;
+      $stmt->close();
+  
+      if($result){
+
+        $body = resetPassEmailBody($fname,$reset_token_otp);
+        $mailResult = sendMail("Reset your password",$body,$email);
+
+        if(array_key_exists("error",$mailResult)){
+          showAlertMessage($result['error'],0);
+           echo $result['error'];
+           
+        } else {
+          showAlertMessage('Email has been sent',1);
+          header('Location:.php');
+        }
+        
+      }else{
+        echo 'entry bhi nhi hui btao';
+      }
+
+    } else {
+        $error = $GLOBALS['con']->errno . ' ' . $GLOBALS['con']->error;
+        echo $error;
     }
+
+
   }
 
 ?>

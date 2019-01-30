@@ -33,9 +33,9 @@
 <?php 
 var_dump($_ENV);
 $recipients = array(
-    'yash@sharabhtechnologies.com' => 'Person One',
-    'anuraj.7627@gmail.com' => 'Person Two',
-    'raviojha500@gmail.com' => 'Person Three'
+    'yash@sharabhtechnologies.com',
+    'anuraj.7627@gmail.com',
+    'raviojha500@gmail.com'
  );
 
  $zip = createZip('../helpers');
