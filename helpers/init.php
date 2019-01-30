@@ -1,4 +1,5 @@
 <?php
+include_once __DIR__.'/../env.php';
 include_once 'conn.php';
 include_once 'helper.php';
 include_once 'file-upload.php';

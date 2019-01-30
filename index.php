@@ -25,9 +25,9 @@
 
 		// -----------------------------------------------
 		if($_SESSION['is_authenticated'] == true) {
-			header("Location:"."views/auth-views/home.php");
+			header("Location:"."views/auth-views/home");
 		} else {
-			header("Location:"."views/auth-views/login.php");
+			header("Location:"."views/auth-views/login");
 		}
 		
 

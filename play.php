@@ -1,4 +1,4 @@
-<?php include_once '../helpers/init.php' ?>
+<?php include_once 'helpers/init.php' ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,6 +31,7 @@
 
 
 <?php 
+var_dump($_ENV);
 $recipients = array(
     'yash@sharabhtechnologies.com' => 'Person One',
     'anuraj.7627@gmail.com' => 'Person Two',
