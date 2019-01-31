@@ -25,11 +25,18 @@ return $body;
 function showAlertMessage($text,$type = 0) {
 // 0 for fail
 // 1 for success
-$alertClass = ($type == 'success' || $type == 1 ) ? 'alert-success' : 'alert-danger';
+$alertClass = ($type == 1 ) ? 'alert-success' : 'alert-danger';
+
 $alertText =<<<alert
-<div class="col-6 alert $alertClass" role="alert">
-$text
+<div class="d-flex mt-3 w-100 justify-content-center align-items-center">
+	<div class="alert $alertClass" role="alert">$text</div>
 </div>
 alert;
 echo $alertText;
+}
+
+function showArray($array) {
+
+		echo "<pre>";
+		print_R($array);
 }

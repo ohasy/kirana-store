@@ -8,11 +8,34 @@
     <title>Document</title>
 </head>
 <body>
-<?php subview('header.php'); ?>
+<?php 
+subview('header.php');
+$showAlert = false;
+if(isset($_POST['pwd-rst'])){
+    if(isset($_POST['usr-email'])){
+        $result = reqResetPassword($_POST['usr-email']);
+
+        if(array_key_exists("success",$result)){
+               header('Location:enter-otp.php');
+               showAlertMessage($result['success'],1);
+            // echo("<script>location.replace = '/enter-otp';</script>");
+        }else {
+            $showAlert = true;
+            $alertType = 0;
+            $alertMsg = $result['error'];
+            
+        }
+    }else{
+        showAlertMessage(`please enter a valid email address or username`,0) ;
+    }    
+}
+?>
+
+
 <div class="container-fluid h-100 d-flex bg-info justify-content-center align-items-center">
 <div class="col-lg-6 bg-light">
-    <div class="header bg-primary  text-center">
-        <h2 class="text-light">Forgot password</h2>
+    <div class="header bg-light text-center">
+        <h2 class="text-light text-info">Forgot password</h2>
     </div>
         <div class="container p-5">
             <form method="post" action="forgot-password">
@@ -29,20 +52,20 @@
                 <div class="d-flex justify-content-center">
                 <button type="submit" class="btn btn-primary" name="pwd-rst">Request New Passwords</button>
                 </div>
+                <?php 
+                if($showAlert){
+                    showAlertMessage($alertMsg,$alertType);
+                }
+                ?>
             </form>
+            <div class="w-100 d-flex mt-3 justify-content-center align-items-center">
+            <p> Already have otp? <a href="enter-otp">Enter Otp</a></p>
+            </div>
         </div>
     </div>
 </div>
     <?php subview('footer.php'); ?> 
 </body>
 
-<?php
-if(isset($_POST['pwd-rst'])){
-    if(isset($_POST['usr-email'])){
-        reqResetPassword($_POST['usr-email']);
-    }else{
-        showAlertMessage(`please enter a valid email address or username`,0) ;
-    }    
-}
-?>
+
 </html>

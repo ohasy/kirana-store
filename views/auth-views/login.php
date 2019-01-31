@@ -5,28 +5,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Login</title>
 </head>
 <body>
 <?php subview('header.php'); ?>
 
-<section id="main">
-    <div class="container col-lg-6">
+<section class="d-flex mt-5 justify-content-center align-items-center" id="main">
+    <div class="container col-lg-6 col-sm-12">
     <div class="header text-center">
-        <h2>Login</h2>
+        <h2>Get in</h2>
     </div>
     <form method="post" action="login.php">
     
         <div class="form-group">
             <label>Username or email</label>
-            <input class="form-control" type="text" name="username" >
+            <input class="form-control" type="text"  name="username" >
         </div>
         <div class="form-group">
             <label>Password</label>
             <input class="form-control" type="password" name="password">
         </div>
-        <div class="form-group">
-            <button class="btn btn-primary" type="submit" class="btn" name="login_user">Login</button>
+        <div class="form-group w-100 mt-4">
+            <button class="btn btn-primary w-100" type="submit" class="btn" name="login_user">Login</button>
         </div>
         <p>
              <a href="forgot-password">Forgot credentials?</a>

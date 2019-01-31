@@ -149,14 +149,17 @@
     $row = $stmt->fetch();
     $stmt->close();
     if (!empty($row)) {
-        addResetToken($user_id,$fname,$email);
+        return addResetToken($user_id,$fname,$email);
     } else {
-    echo 'user does not exist';
+      return array("error"=>"User does not exists");
     }
   
   }
 
-  function addResetToken($user_id,$fname,$email){
+  // GET USER MAIL FROM USER ID
+  // SEND MAIL WITH A 6 DIGIT OTP
+
+  function addResetToken($user_id,$fname,$email):array{
   
     $reset_token_otp = mt_rand(100000, 999999);
     $qryInsrtRstTkn = "INSERT INTO `pwd_reset_tokens` (`user_id`,`reset_token`) VALUES(?,?)";
@@ -173,25 +176,112 @@
 
         $body = resetPassEmailBody($fname,$reset_token_otp);
         $mailResult = sendMail("Reset your password",$body,$email);
-
+        
         if(array_key_exists("error",$mailResult)){
-          showAlertMessage($result['error'],0);
-           echo $result['error'];
+      
+          return array("error"=>$mailResult['error']);
            
         } else {
-          showAlertMessage('Email has been sent',1);
-          header('Location:.php');
+
+          return array("success"=>$mailResult['success']);
+          
         }
         
       }else{
-        echo 'entry bhi nhi hui btao';
+        return array("error"=>"Cant save new otp to db");
       }
 
     } else {
         $error = $GLOBALS['con']->errno . ' ' . $GLOBALS['con']->error;
-        echo $error;
+        return array("error"=>$error);
+        
     }
 
+  }
+
+  // GET 6 DIGIT OTP 
+  // SET USER SESSION TO BE ABLE TO CHANGE PASSWORD
+  
+  function submitOTP($otp) {
+    $qrySbtOTP = 'SELECT `user_id` FROM `pwd_reset_tokens` WHERE `reset_token`=?';
+    $stmt = $GLOBALS['con']->prepare($qrySbtOTP);
+    $stmt->bind_param("s",$otp);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if($stmt) {
+      $stmt->close();
+      if($result->num_rows) {
+
+        while($row = mysqli_fetch_assoc($result)){
+  
+          if(!empty($row)) {
+  
+            session_start();
+            $_SESSION['reset_password'] =true;
+            $_SESSION['user_id'] = $row['user_id'];
+            // var_dump($_SESSION);
+              
+            // return array("error"=>'Wait kar bhai');
+            return array("success"=>$row['user_id']);
+        }else {
+            return array("error"=>'Incorrect OTP');
+          }
+        }
+  
+      }else {
+        return array("error"=>'Incorrect OTP');
+      }
+    } else {
+      $stmt->close();
+      $error = $GLOBALS['con']->errno . ' ' . $GLOBALS['con']->error;
+      return array("error"=>$error);
+    }
+
+
+    
+  }
+
+  // RESET PASSWORD WITH NEW PASSWORD
+
+  function resetPass($user_id,$pass1,$pass2):array{
+    $password1 = mysqli_real_escape_string($GLOBALS['con'],$pass1);
+    $password2 = mysqli_real_escape_string($GLOBALS['con'],$pass2);
+    $errors = array();
+    if (empty($password1) || empty($password2)) { 
+      array_push($errors, "Password fields are required"); }
+    if ($password1 != $password2) {
+      array_push($errors, "The two passwords do not match");
+    }
+
+    if(count($errors) != 0){
+      return array("error"=>$errors);
+    }
+    $pass_hash = password_hash($password1,PASSWORD_BCRYPT);
+    // $user_id = $_SESSION['user_id'];
+    $GLOBALS['con']->autocommit(FALSE);
+    $qryChngPass = "UPDATE `users` SET `password`=? WHERE `id`=? ";
+    $stmt = $GLOBALS['con']->prepare($qryChngPass);
+    $stmt->bind_param("sii",$pass_hash,$user_id,$user_id);
+    $stmt->execute();
+
+    $qryDelRstTkn = "DELETE FROM `pwd_reset_tokens` WHERE `user_id`=?";
+    $stmt = $GLOBALS['con']->prepare($qryDelRstTkn);
+    $stmt->bind_param("i",$user_id);
+    $stmt->execute();
+
+    $GLOBALS['con']->commit();
+    $GLOBALS['con']->autocommit(TRUE);
+
+    if($stmt) {
+      
+      $stmt->close();
+      session_destroy();
+      return array("success"=>"Password has been changed successfully");
+    }else {
+      $stmt->close();
+      $error = $GLOBALS['con']->errno . ' ' . $GLOBALS['con']->error;
+      return array("error"=>array($error));
+    }
 
   }
 
