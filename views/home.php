@@ -1,4 +1,4 @@
-<?php include_once '../helpers/init.php' ?>
+<?php include_once __DIR__.'/../helpers/init.php' ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

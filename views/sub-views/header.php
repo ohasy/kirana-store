@@ -7,7 +7,7 @@
 		<!-- Local Link -->
 </head>
 
-
+<?php session_start(); ?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">Kirana-store</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,10 +37,32 @@
         <a class="nav-link disabled" href="#">Disabled</a>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
+    <?php 
+      if (isset($_SESSION['is_authenticated']) &&  $_SESSION['is_authenticated'] == true) {
+
+        ?>
+        
+        <form class="d-flex flex-row my-2 my-lg-0 text-center">
+          <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> -->
+          <p class="mr-2 text-center"><?=$_SESSION['fname']?></p>
+          <a href="logout" class="text-success"><button class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</button></a>
+        </form>
+
+        <?php
+      } else {
+        ?>
+          <form class="d-flex flex-row my-2 my-lg-0">
+          <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> -->
+          <a href="register"><button class="btn btn-success my-2 my-sm-0" type="submit">Register</button></a>
+          <a href="login"><button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button></a>
+        </form>
+        <?php
+      }
+    ?>
+    <!-- <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
+    </form> -->
   </div>
 </nav>
 

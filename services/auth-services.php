@@ -74,15 +74,16 @@
 
   function loginUser(string $_username,string $pass_word)
   {
+      session_start();
 
       $errors = array();
       $username = mysqli_real_escape_string($GLOBALS['con'], $_username);
-      // $pass = mysqli_real_escape_string($GLOBALS['con'], $_password);
+      $password = mysqli_real_escape_string($GLOBALS['con'], $pass_word);
       // echo('<br>pass'.$pass);
       if (empty($username)) {
           array_push($errors, "Username is required");
       }
-      if (empty($pass_word)) {
+      if (empty($password)) {
           array_push($errors, "Password is required");
       }
   
@@ -95,23 +96,30 @@
 
                 $stmt->bind_param("s", $username);
                 $stmt->execute();
-                $stmt->bind_result($user_id, $fname, $lname, $username, $password, $role);
+                $stmt->bind_result($user_id, $fname, $lname, $username, $pass_hash, $role);
                 $row =$stmt->fetch();
                 // echo $_password;
-                echo $user_id.' '.$fname.' '.$lname.' '.$username.' '.$pass_word.' '.$password.' '.$role; 
-                var_dump(password_verify($pass_word, $password));
+                // echo $user_id.' '.$fname.' '.$lname.' '.$username.' '.$password.' '.$pass_hash.' '.$role; 
+                var_dump(password_verify($password, $pass_hash));
                 if (!empty($row)) {
                   
-                    if (password_verify($pass_word, $password)) {
-                        session_start();
+                    if (password_verify($password, $pass_hash)) {
+                       
                         $_SESSION['username']= $username;
+                        $_SESSION["fname"] = $fname;
+                        $_SESSION['lname'] = $lname;
                         $_SESSION['is_authenticated'] = true;
                         $_SESSION['user_id'] = $user_id;
                         $_SESSION['is_admin'] = false;
                         $_SESSION['role'] = $role;
 
                         echo 'user logged in';
-                        header('Location:../home.php');
+                        if($role == 0) {
+                          header('Location:../home.php');
+                        } else if($role == 1) {
+                          header('Location:../dashboard.php');
+                        }
+                        
                         
                     } else {
                         echo 'hash nhi match ho rha login failed';
@@ -261,13 +269,13 @@
     $GLOBALS['con']->autocommit(FALSE);
     $qryChngPass = "UPDATE `users` SET `password`=? WHERE `id`=? ";
     $stmt = $GLOBALS['con']->prepare($qryChngPass);
-    $stmt->bind_param("sii",$pass_hash,$user_id,$user_id);
+    $stmt->bind_param("si",$pass_hash,$user_id);
     $stmt->execute();
 
     $qryDelRstTkn = "DELETE FROM `pwd_reset_tokens` WHERE `user_id`=?";
-    $stmt = $GLOBALS['con']->prepare($qryDelRstTkn);
-    $stmt->bind_param("i",$user_id);
-    $stmt->execute();
+    $stmt2 = $GLOBALS['con']->prepare($qryDelRstTkn);
+    $stmt2->bind_param("i",$user_id);
+    $stmt2->execute();
 
     $GLOBALS['con']->commit();
     $GLOBALS['con']->autocommit(TRUE);

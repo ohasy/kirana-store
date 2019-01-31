@@ -26,7 +26,7 @@ It will change again I am sure. so no point in documenting that right now.
 - make product and categories crud services -- DONE
 - login and register with pass hashes. --DONE
 - send mails with zipped attachments through phpmailer --DONE
-- forget password functionality with password reset tokens --WORKING
+- forget password functionality with password reset tokens --DONE
 - make jwt token based rest api for login/sign up and everything else.
 - figure out a way to show good urls
 - use ajax calls somewhere in the app.

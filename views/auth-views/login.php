@@ -8,7 +8,16 @@
     <title>Login</title>
 </head>
 <body>
-<?php subview('header.php'); ?>
+<?php subview('header.php');
+    if(isset($_POST['login_user'])){
+        // echo('post pass'.$_POST['password']);
+        $username = $_POST['username'];
+        $pass = $_POST['password'];
+        // echo('passs'.$pass);
+        loginUser($username,$pass);
+    }
+
+?>
 
 <section class="d-flex mt-5 justify-content-center align-items-center" id="main">
     <div class="container col-lg-6 col-sm-12">
@@ -26,7 +35,7 @@
             <input class="form-control" type="password" name="password">
         </div>
         <div class="form-group w-100 mt-4">
-            <button class="btn btn-primary w-100" type="submit" class="btn" name="login_user">Login</button>
+            <button class="btn btn-primary w-100" type="submit"  name="login_user">Login</button>
         </div>
         <p>
              <a href="forgot-password">Forgot credentials?</a>
@@ -41,13 +50,3 @@
 </body>
 </html>
 
-
-<?php 
-    if(isset($_POST['login_user'])){
-        // echo('post pass'.$_POST['password']);
-        $username = $_POST['username'];
-        $pass = $_POST['password'];
-        // echo('passs'.$pass);
-        loginUser($username,$pass);
-    }
-?>
