@@ -1,8 +1,16 @@
 <?php
-function subview($file){
-	$file = __DIR__.'/../views/sub-views/'.$file;
+function subview($file,$isHome = false){
+	if($isHome){
+		$file = __DIR__.'/../views/sub-views/'.$file;
+		
+	} else {
+		$file = __DIR__.'/../views/sub-views/'.$file;
+		
+	}
 	include $file;
+
 }
+
 
 function resetPassEmailBody($fname,$reset_token_otp){
 $host = $_SERVER['HTTP_HOST'];

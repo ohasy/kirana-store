@@ -16,6 +16,7 @@
     $password1 = mysqli_real_escape_string($GLOBALS['con'],$_password1);
     $password2 = mysqli_real_escape_string($GLOBALS['con'],$_password2);
 
+    if (empty($_fname)) { array_push($errors, "First name is required"); }
     if (empty($username)) { array_push($errors, "Username is required"); }
     if (empty($email)) { array_push($errors, "Email is required"); }
     if (empty($password1)) { array_push($errors, "Password is required"); }
@@ -53,7 +54,7 @@
         $_SESSION['is_authenticated'] = true;
         $_SESSION['user_id'] = $insert_id;
         $_SESSION['is_admin'] = false;
-        $_SESSION['role'] = 0;
+        $_SESSION['role'] = 1;
         
         return array("success"=>true);
       }else {
@@ -113,11 +114,10 @@
                         $_SESSION['is_admin'] = false;
                         $_SESSION['role'] = $role;
 
-                        echo 'user logged in';
                         if($role == 0) {
-                          header('Location:../home.php');
+                          header('Location:../home-views/home.php');
                         } else if($role == 1) {
-                          header('Location:../dashboard.php');
+                          header('Location:../home-views/dashboard.php');
                         }
                         
                         
@@ -290,6 +290,14 @@
       $error = $GLOBALS['con']->errno . ' ' . $GLOBALS['con']->error;
       return array("error"=>array($error));
     }
+
+  }
+
+  function logout() {
+
+      session_start();
+      session_destroy();
+      header("Location:login");
 
   }
 

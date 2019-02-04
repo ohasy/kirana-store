@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 30, 2019 at 03:33 PM
+-- Generation Time: Feb 04, 2019 at 07:06 AM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.1.26
 
@@ -88,7 +88,7 @@ CREATE TABLE `product_images` (
 CREATE TABLE `pwd_reset_tokens` (
   `id` int(10) NOT NULL,
   `user_id` int(10) NOT NULL,
-  `resert_token` varchar(32) NOT NULL,
+  `reset_token` varchar(32) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -102,6 +102,15 @@ CREATE TABLE `roles` (
   `id` int(11) NOT NULL,
   `role_name` varchar(32) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `roles`
+--
+
+INSERT INTO `roles` (`id`, `role_name`) VALUES
+(2, 'Admin'),
+(1, 'User'),
+(3, 'Vendor');
 
 -- --------------------------------------------------------
 
@@ -132,8 +141,10 @@ INSERT INTO `users` (`id`, `f_name`, `l_name`, `username`, `email`, `password`, 
 (5, 'yash', 'ojha', '12', 'qwe@12', '$2y$10$7woCwy7Lk4fUiSwIX97b9eo8P', '2019-01-29 07:10:52', '0000-00-00 00:00:00', 0),
 (6, 'yash', 'ojha', 'yasho', 'asd@asd', '$2y$10$eTM4cyMdh30bfC4yUBGSMe1Pj', '2019-01-29 07:11:32', '0000-00-00 00:00:00', 0),
 (7, 'yash', 'ojha', 'yahs', 'yas@yas', '$2y$10$aTyhHqtnWPEAxMICOHJZ1.1hF', '2019-01-29 07:11:56', '0000-00-00 00:00:00', 0),
-(8, 'yash ojha', 'yash ojha', 'yashojha1', 'yash@yash.yash', '$2y$10$8yinrpO.EpLqYI9ho5d0f.ykU', '2019-01-29 08:58:16', '0000-00-00 00:00:00', 0),
-(9, 'yashojha', 'ojha', 'yash', 'yash@yash', '$2y$10$6zwbklP0VXq9hlNU03lPkuPxPBhN6TY.m6/vvt.cBN5x8NR7elGD2', '2019-01-29 10:50:55', '0000-00-00 00:00:00', 0);
+(8, 'yash ojha', 'yash ojha', 'yashojha1', 'yash@sharabhtechnologies.com', '$2y$10$XnWzHCchS6Xm6hjIIMReeexzJwXcNPMbSSnN6QA8yKj.Ho1rPFwau', '2019-01-29 08:58:16', '2019-02-04 05:11:31', 1),
+(9, 'yashojha', 'ojha', 'yash', 'yash@', '$2y$10$6zwbklP0VXq9hlNU03lPkuPxPBhN6TY.m6/vvt.cBN5x8NR7elGD2', '2019-01-29 10:50:55', '2019-01-31 09:34:33', 0),
+(10, 'anil', 'bissa', 'anil', 'anilbissa@gmail.com', '$2y$10$/GMI3ebiqvO9Z.wYAvkFs.TEK.Du/ExUaYzPn2qWs2/LkX9GDlEpm', '2019-02-01 07:33:46', '0000-00-00 00:00:00', 0),
+(11, 'rahul', 'modi', 'rahul', 'rahul@something.com', '$2y$10$7vN7cVEddGc54FdRUoUwd..DZ5wSKLAHYUtfHxgco4qY0jlHiyTJq', '2019-02-01 07:36:37', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -263,13 +274,13 @@ ALTER TABLE `pwd_reset_tokens`
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `user_details`

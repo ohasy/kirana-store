@@ -7,7 +7,13 @@
 		<!-- Local Link -->
 </head>
 
-<?php session_start(); ?>
+<?php 
+include_once __DIR__."/../../services/auth-services.php";
+session_start(); 
+$isAuthenticated = $_SESSION['is_authenticated'] ?? false;
+$fname = $_SESSION['fname'] ?? '';
+
+?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">Kirana-store</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -15,6 +21,9 @@
   </button>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <?php
+    if($isAuthenticated == true) {
+    ?>
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
         <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
@@ -37,34 +46,42 @@
         <a class="nav-link disabled" href="#">Disabled</a>
       </li>
     </ul>
+    <?php } ?>
+    <ul class="navbar-nav ml-auto">
     <?php 
-      if (isset($_SESSION['is_authenticated']) &&  $_SESSION['is_authenticated'] == true) {
+      if ($isAuthenticated == true) {
 
         ?>
-        
-        <form class="d-flex flex-row my-2 my-lg-0 text-center">
+        <li>
+        <form class="d-flex flex-row my-2 my-lg-0 text-center" method="post">
           <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> -->
-          <p class="mr-2 text-center"><?=$_SESSION['fname']?></p>
-          <a href="logout" class="text-success"><button class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</button></a>
+          <p class="mr-2 text-center"><?=$fname?></p>
+          <button class="btn btn-outline-success my-2 my-sm-0" id="logout-btn"  formaction="/kirana-store/views/auth-views/logout" type="submit">Logout</button>
         </form>
-
+      </li>
         <?php
       } else {
         ?>
-          <form class="d-flex flex-row my-2 my-lg-0">
+        <li>
+          <form class="d-flex flex-row my-2 my-lg-0" method="post">
           <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> -->
-          <a href="register"><button class="btn btn-success my-2 my-sm-0" type="submit">Register</button></a>
-          <a href="login"><button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button></a>
+          <button  formaction="register" class="btn btn-success my-2 my-sm-0 mr-1" type="submit">Register</button>
+          <button  formaction="login" class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
         </form>
+      </li>
         <?php
       }
     ?>
+
+    </ul>
+
     <!-- <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form> -->
-  </div>
+
 </nav>
+
 
 <!-- Local Links -->
 <script src="assets/js/jquery-3.2.1.slim.min.js" crossorigin="anonymous"></script>

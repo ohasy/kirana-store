@@ -1,4 +1,4 @@
-<?php include_once __DIR__.'/../helpers/init.php' ?>
+<?php include_once __DIR__.'/../../helpers/init.php' ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,7 +20,7 @@
 
 	<section id="content">
 		<!-- content begins -->
-asd
+HOME
   
   <?php subview('footer.php'); ?> 
 
