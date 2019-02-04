@@ -5,14 +5,14 @@
 
   function getCategories():array {
 
-    $getCategoriesQuery = "SELECT `id`,`category_name` FROM `categories`";
+    $getCategoriesQuery = "SELECT A.id,A.category_name,A.cate_desc,B.image FROM `categories` AS `A` LEFT JOIN `category_images` AS `B` ON A.cate_img_id=B.id";
     $result = mysqli_query($GLOBALS['con'], $getCategoriesQuery);
     // var_dump($result);
 
     if($result->num_rows) {
 
       $res_array = array();
-      while($row = mysqli_fetch_row($result)){
+      while($row = mysqli_fetch_assoc($result)){
         $res_array[] = $row;
       }
       return $res_array;
