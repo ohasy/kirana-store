@@ -31,21 +31,20 @@ DASHBOARD
 > Categories
 > show all Categories
 > Add option
+<h1 class="display-4">Categories</h1>
+<div class="container clearfix">
+
 <div class="row">
 <?php 
 if(count($categories >0 )) {
     foreach ($categories as $cate) {
-        // showArray($cate);
-        // localhost/kirana-store/uploads/18371287815c51481d45d9d.png
-        // <?=$_ENV['IMGPATH'].$cate['image']?>
-         <!-- print_r($_ENV['IMGPATH'].$cate['image']) -->
-        
-        <div class="card" style="width: 18rem;">
+?>
+        <div class="card ml-3" style="width: 18rem;">
             <img class="card-img-top" src="<?=$_ENV['IMGPATH'].$cate['image']?>" alt="Card image cap">
             <div class="card-body">
                 <h5 class="card-title"><?=$cate['category_name'] ?></h5>
                 <p class="card-text"><?=$cate['cate_desc']?></p>
-                <a href="#" class="btn btn-primary">View</a>
+                <a href="#" class="btn btn-primary">Edit</a>
             </div>
         </div>
         <?php
@@ -53,7 +52,7 @@ if(count($categories >0 )) {
 }
 ?>
 </div>
-  
+</div>  
   <?php subview('footer.php'); ?> 
 
 </section>

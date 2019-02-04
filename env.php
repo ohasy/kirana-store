@@ -20,6 +20,6 @@ if($ENV == 'development') {
     $_ENV['DB_PASS'] = '';
     $_ENV["IMGPATH"] = $_ENV['DB_HOST'].$_ENV['ROOT'] .'/uploads/';
 }
-var_dump($_ENV["IMGPATH"])
+
 
 ?>
